@@ -72,8 +72,8 @@ for file in files:
 			plt.plot(horizons,Y,label=algo+" "+str(eps))
 		else:
 			plt.plot(horizons,Y,label=algo)
-		# plt.yscale('log')
-		plt.xscale('log')
+	# plt.yscale('log')
+	plt.xscale('log')
 	plt.legend(loc='upper left')
 	plt.show()
 	print("\n")		
