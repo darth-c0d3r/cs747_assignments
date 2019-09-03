@@ -2,8 +2,6 @@ import sys
 import random
 import math
 
-# https://lemire.me/blog/2004/11/25/computing-argmax-fast-in-python/
-
 def readBandit(filename):
 	"""
 	read the file containing the bandit instance and return a bandit instance (list).
@@ -223,6 +221,7 @@ if __name__ == "__main__":
 	# process all input arguments
 	# can be better implemented but since the 
 	# sequence of args is guaranteed, this will do
+	# use argparse if needed
 	file_in = sys.argv[2]
 	algorithm = sys.argv[4]
 	seed = int(sys.argv[6])

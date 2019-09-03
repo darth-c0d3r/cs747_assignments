@@ -1,3 +1,6 @@
+# just some utility code that calls the get_results function
+# in the bandit file to get the required values
+
 from bandit import get_results
 
 files = [ "../instances/i-1.txt", "../instances/i-2.txt", "../instances/i-3.txt"]

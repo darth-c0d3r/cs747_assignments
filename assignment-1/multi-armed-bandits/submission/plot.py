@@ -45,7 +45,6 @@ def get_data(data):
 	return hsh
 
 
-
 files = [ "../instances/i-1.txt", "../instances/i-2.txt", "../instances/i-3.txt"]
 algo_eps = [("round-robin",0), ("epsilon-greedy",0.002), ("epsilon-greedy",0.02,), 
 ("epsilon-greedy",0.2), ("ucb",0), ("kl-ucb",0), ("thompson-sampling",0)]
@@ -69,11 +68,12 @@ for file in files:
 			Y.append(hsh[file][algo+"_"+str(eps)][time])
 		print(Y)
 		# plot the list here
-		plt.plot(horizons,Y,label=algo+"_"+str(eps))
+		if algo == "epsilon-greedy":
+			plt.plot(horizons,Y,label=algo+" "+str(eps))
+		else:
+			plt.plot(horizons,Y,label=algo)
 		# plt.yscale('log')
 		plt.xscale('log')
 	plt.legend(loc='upper left')
 	plt.show()
-	break
-
-		
+	print("\n")		
