@@ -1,7 +1,8 @@
 import sys
+import random
+from pulp import *
 
 class MDP:
-
 	"""
 	Wrapper Class for representing MDPs.
 	self.S = number of states
@@ -29,6 +30,8 @@ class MDP:
 		self.type = None
 
 		# calculated variables
+		# Note that at intermittent stages,
+		# VStar amd PiStar need not be optimum
 		self.VStar = None # optimal values
 		self.PiStar = None # optimal policy
 
@@ -101,6 +104,13 @@ class MDP:
 		# set the output redirection to default
 		sys.stdout = og_stdout
 
+	def randomInitPolicy(self):
+		"""
+		initializes PiStar as a random Policy
+		"""
+		self.PiStar = [random.randint(0,self.A-1) for _ in range(self.S)]
+
+
 	def getOptimalPolicy(self):
 		"""
 		calculates the optimal policy given
@@ -118,6 +128,43 @@ class MDP:
 		for s in range(self.S):
 			QValues = [sum([QValue(s,a,s_) for s_ in range(self.S)]) for a in range(self.A)]
 			self.PiStar[s] = argmax(QValues)
+
+	def getValueFunction(self):
+		"""
+		calculates the value function given
+		that PiStar is already calculated
+		Note : PiStar need not be optimal
+		It will calculate VPi and set VStar = VPi
+		# use Pulp library to get VStar
+		"""
+
+		# initialize VStar if not already done
+		if self.VStar is None:
+			self.VStar = [None]*self.S
+
+		# declare the problem variable
+		problem = LpProblem()
+
+		# make an array of S decision variables
+		decisionVariables = [LpVariable("V_%d"%s) for s in range(self.S)]
+
+		# remove the last state if it is as episodic task
+		if self.type == "episodic":
+			decisionVariables[-1] = 0.
+
+
+		# add the set of S equations to the problem
+		for s in range(self.S):
+			a = self.PiStar[s]
+			problem += sum([self.T[s][a][s_]*(self.R[s][a][s_] + self.gamma*decisionVariables[s_]) for s_ in range(self.S)]) \
+					== decisionVariables[s], "Bellman's Equation, State %d"%s
+
+		# solve the problem
+		problem.solve()
+
+		# set the values in self.VStar
+		for s, var in enumerate(decisionVariables):
+			self.VStar[s] = value(var)
 
 	def printAns(self, filename=None):
 		"""
