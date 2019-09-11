@@ -1,0 +1,3 @@
+The file mdp.png contains the diagram of the MDP that I have designed. [Ref. drawn using Lucid Chart]
+
+The MDP is deterministic with two actions, 0 (solid lines) and 1 (dotted lines). Whenever a state has only one outgoing edge, it can be assumed that the action for which an edge is missing is a self loop with no reward. Edges without a reward value written on them has zero rewards.
