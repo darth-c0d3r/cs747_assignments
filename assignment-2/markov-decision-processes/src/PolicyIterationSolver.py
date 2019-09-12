@@ -18,9 +18,9 @@ def PolicyIterationSolver(mdp):
 		# set VPi
 		mdp.getValueFunction()
 
-		# get current policy
+		# init current policy
 		currPi = [0]*mdp.S
-		currPi[-1] = mdp.PiStar[-1]
+		currPi[-1] = mdp.PiStar[-1] # a quick fix for episodic task
 
 		# iterate over all states to find better policy
 		for s in range(mdp.S - int(mdp.type == "epsiodic")):
