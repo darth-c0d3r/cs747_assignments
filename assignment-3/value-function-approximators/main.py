@@ -12,7 +12,7 @@ class Trajectory():
 		self.filename = filename
 		self.S = None # Number of States
 		self.A = None # Number of Actions
-		self.lamda = None # Discount Factor
+		self.gamma = None # Discount Factor
 		self.Tx = [] # List of Transitions
 		self.V = None # Approximated Value Function
 
@@ -23,7 +23,7 @@ class Trajectory():
 		# read first three lines for MDP info
 		self.S = int(all_lines[0])
 		self.A = int(all_lines[1])
-		self.lamda = float(all_lines[2])
+		self.gamma = float(all_lines[2])
 
 		# read rest of the lines for Tx
 		for i in range(3, len(all_lines)-1):
@@ -37,7 +37,7 @@ class Trajectory():
 
 		print(self.S)
 		print(self.A)
-		print(self.lamda)
+		print(self.gamma)
 
 		for tx in self.Tx:
 			print(tx)
@@ -51,5 +51,7 @@ filename = sys.argv[1]
 episode = Trajectory(filename)
 episode.readFile()
 
-td_zero(episode)
+# td_zero(episode)
+# td_one(episode)
+td_lambda(episode, 0.5)
 episode.printAns()
