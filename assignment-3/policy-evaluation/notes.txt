@@ -1,0 +1,14 @@
+CS747 [Assignment 3]
+
+I implemented 3 different algorithms, compared their results empirically and chose the best one.
+
+1. TD(1) [Every Visit Monte Carlo]
+	Since this is not an episodic task, minor modifications were required to make the algorithm work well. First of all, instead of taking the reward from whole episode, we can stop when the path is long enough and the rewards stops changing significantly. A more serious implication of this is that we can not consider the smaller paths when we are averaging over the rewards for all the runs. Therefore, I'm only considering the runs which are at least as long as 0.25 times the total trajectory. This ratio is also empirically determined and works well in practice. If this was an episodic task, we could consider contributions from the smaller paths as well, however, in our case we should only consider paths that are long enough to represent actual reward values.
+
+2. TD(0)
+	I implemented the Batch Version of Full Bootstrapping (TD(0)) Algorithm. After iterating over a few hundreds of iterations, the estimated Value Function converges. For safety, I've done a slight overkill and done the iteration for 1000 steps. No special modifications are required to make it work for the episodic task.
+
+3. TD(lambda)
+	Just like TD(0), I have implemented the Batch version of TD(lambda) as discussed in class. After around 1000 iterations, the value function converges. I checked various values of lambda and selected the value empirically.
+
+From my observations, TD(1) seemed to work the best as it gave the closest values on the given data files.

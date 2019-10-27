@@ -3,6 +3,7 @@ import random
 # Contains Algorithms to approximate Value Function from a Trajectory
 
 def td_one(trj):
+	# every-visit td(1)
 
 	V = [[0., 0.] for _ in range(trj.S)]
 

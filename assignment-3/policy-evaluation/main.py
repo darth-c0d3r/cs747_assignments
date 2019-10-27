@@ -52,6 +52,6 @@ episode = Trajectory(filename)
 episode.readFile()
 
 # td_zero(episode)
-# td_one(episode)
-td_lambda(episode, 0.5)
+td_one(episode)
+# td_lambda(episode, 0.75)
 episode.printAns()
