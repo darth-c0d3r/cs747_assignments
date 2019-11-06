@@ -55,7 +55,7 @@ def td_lambda(trj, lamda):
 	trj.V = [0.]*trj.S
 
 	# repeat multiple times
-	for _ in range(1000):
+	for _ in range(10):
 
 		# init time
 		time = 0.
