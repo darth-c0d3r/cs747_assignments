@@ -66,7 +66,7 @@ class Agent:
 
 			values.append(time)
 
-		return values
+		return numpy.array(values)
 
 	def epsilonGreedy(self, state, epsilon):
 		"""
@@ -87,13 +87,26 @@ class Agent:
 
 def main():
 
-	env = getDefaultGridworld()
-	agent = Agent(env)
+	seeds = [42, 6, 4, 22, 11, 98, 69, 15, 1, 13] # a (not-so) random list of seeds
+
 	alpha = 0.5
 	epsilon = 0.1
-	num_episodes = 170
-	values = agent.Sarsa(alpha, epsilon, num_episodes)
+	num_episodes = 200
 
-	makePlot(values)
+	# iterate over all 3 tasks
+	for task in [1, 2, 3]:
+
+		timePlot = numpy.zeros((num_episodes+1))
+
+		for seed in seeds:
+			# set the random seed
+			numpy.random.seed(seed)
+
+			env = getDefaultGridworld(task)
+			agent = Agent(env)
+			timePlot += agent.Sarsa(alpha, epsilon, num_episodes)
+
+		timePlot /= (len(seeds)*1.)
+		makePlot(timePlot, task)
 
 main()
