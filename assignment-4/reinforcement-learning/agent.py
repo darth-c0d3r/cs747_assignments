@@ -114,7 +114,7 @@ def main():
 
 	else: # all plots on 1 graph
 		values = []
-		for task in [1,2,3]:
+		for task in [1,2,3,4]:
 			timePlot = numpy.zeros((num_episodes+1))
 
 			for seed in seeds:
