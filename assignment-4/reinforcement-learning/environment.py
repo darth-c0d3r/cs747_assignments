@@ -26,7 +26,7 @@ class WindyGridworld:
 		self.task = task
 
 		# make sure the initialization is correct
-		assert self.task in [1,2,3], "Invalid Task"
+		assert self.task in [1,2,3,4], "Invalid Task"
 		assert all([self.start[0] < self.rows, self.start[1] < self.columns]), "Incorrect Start State"
 		assert all([self.goal[0] < self.rows, self.goal[1] < self.columns]), "Incorrect Goal State"
 		assert len(self.wind_speeds) == self.columns, "Wind Speeds length Incorrect"
@@ -34,8 +34,10 @@ class WindyGridworld:
 		# initialize the possible actions with their results
 		if self.task == 1:
 			self.actions = {"N": (1,0), "S": (-1,0), "E": (0,1), "W": (0,-1)}
-		else:
+		elif self.task == 2 or self.task == 3:
 			self.actions = {"N": (1,0), "S": (-1,0), "E": (0,1), "W": (0,-1), "NE": (1,1), "NW": (1,-1), "SE": (-1,1), "SW": (-1,1)}
+		elif self.task == 4:
+			self.actions = {"N": (1,0), "S": (-1,0), "E": (0,1), "W": (0,-1), "NE": (1,1), "NW": (1,-1), "SE": (-1,1), "SW": (-1,1), "0":(0,0)}
 
 	def take_step(self, state, action):
 		"""

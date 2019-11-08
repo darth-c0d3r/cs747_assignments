@@ -1,6 +1,7 @@
 from environment import *
 from util import *
 import numpy
+import sys
 
 class Agent:
 	"""
@@ -89,13 +90,15 @@ def main():
 
 	seeds = [42, 6, 4, 22, 11, 98, 69, 15, 1, 13] # a (not-so) random list of seeds
 
+	# parameters
 	alpha = 0.5
 	epsilon = 0.1
 	num_episodes = 200
 
-	# iterate over all 3 tasks
-	for task in [1, 2, 3]:
+	task = int(sys.argv[1])
 
+	# if a single plot is to be generated
+	if task != 0:
 		timePlot = numpy.zeros((num_episodes+1))
 
 		for seed in seeds:
@@ -108,5 +111,23 @@ def main():
 
 		timePlot /= (len(seeds)*1.)
 		makePlot(timePlot, task)
+
+	else: # all plots on 1 graph
+		values = []
+		for task in [1,2,3]:
+			timePlot = numpy.zeros((num_episodes+1))
+
+			for seed in seeds:
+				# set the random seed
+				numpy.random.seed(seed)
+
+				env = getDefaultGridworld(task)
+				agent = Agent(env)
+				timePlot += agent.Sarsa(alpha, epsilon, num_episodes)
+
+			timePlot /= (len(seeds)*1.)
+			values.append(timePlot)
+
+		makePlot(values, "all")
 
 main()
